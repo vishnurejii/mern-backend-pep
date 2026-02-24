@@ -1,6 +1,8 @@
 import userModel  from "../models/userModel.js";
 import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
+const SECRET="hello123"
 const addUser=async(req,res)=>{
 
     const body=req.body
@@ -31,7 +33,13 @@ const login=async(req,res)=>{
     if(found){
         const checkPassword=await bcrypt.compare(password,found.password)
         if(checkPassword){
-            res.status(200).json({message:"success"})
+            const obj={
+                name:found.name,
+                email:found.email,
+                role:found.role
+            }
+            const token=jwt.sign(obj,SECRET,{expiresIn:"1h"})
+            res.status(200).json({message:"success",token})
         }else{
             res.status(401).json({message:"user not found"})
         }

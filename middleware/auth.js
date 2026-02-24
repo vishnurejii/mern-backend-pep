@@ -1,9 +1,29 @@
-// import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 
-// const authenticate=(req,res,next)=>{
-//     const authHeader=req.headers.authorization
-//     const token=authHeader.slipt(" ")[1]
-//     const user=jwt.verify(token,SECRET)
+const SECRET="hello123"
 
+const authenticate=(req,res,next)=>{
+    const authHeader=req.headers.authorization
+    const token=authHeader.split(" ")[1]
+    const user=jwt.verify(token,SECRET)
 
-// }
+try{
+    const user=jwt.verify(token,SECRET)
+    req.user=user;
+    next()
+}catch(err){
+    console.log(err)
+    res.status(401).json({message:"Invalid token"})
+}
+}
+
+const authorize=(...roles)=>{
+    return (req,res,next)=>{
+        if(roles.includes(req.user.role)){
+            return next()
+        }else{
+            res.status(401).json("access denied")
+        }
+    }
+}
+export{authenticate,authorize}
