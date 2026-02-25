@@ -6,6 +6,7 @@ const authenticate=(req,res,next)=>{
     const authHeader=req.headers.authorization
     const token=authHeader.split(" ")[1]
     const user=jwt.verify(token,SECRET)
+}
 
 try{
     const user=jwt.verify(token,SECRET)
@@ -15,7 +16,7 @@ try{
     console.log(err)
     res.status(401).json({message:"Invalid token"})
 }
-}
+
 
 const authorize=(...roles)=>{
     return (req,res,next)=>{

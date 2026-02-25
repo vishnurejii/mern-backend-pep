@@ -1,19 +1,16 @@
 import express from "express"
 import dbConnect from "./config/db.js"
-import userRouter from "./routes/userRoutes.js"
-const app=express()
+import Router from "./routes/userRoutes.js"
+
+const app = express()
 
 app.use(express.json())
 
-app.use("/api/users",userRouter)
+app.use("/api/users", Router)
 
-const startSever=async()=>{
+const startServer = async () => {
     await dbConnect()
-    app.listen(8080,()=>console.log("server started"))
+    app.listen(8080, () => console.log("server started 8080"))
 }
 
-startSever()
-
-
-
-
+startServer()

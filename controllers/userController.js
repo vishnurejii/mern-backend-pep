@@ -1,4 +1,4 @@
-import userModel  from "../models/userModel.js";
+import userModel  from "../models/productModel.js";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
@@ -45,4 +45,7 @@ const login=async(req,res)=>{
         }
     }
 }
+
+
+
 export{addUser,showUsers,deleteUser,login}
